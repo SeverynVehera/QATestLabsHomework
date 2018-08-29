@@ -15,17 +15,14 @@ public class CheckMainMenuTest extends BaseScript{
     private static  List<WebElement> menuItems;
     public static void main(String[] args)  {
 
-        String login = System.getenv("PRESTA_LOGIN");
-        String password = System.getenv("PRESTA_PASSWD");
-
         driver.manage().window().maximize();
         driver.navigate().to(Properties.getBaseAdminUrl());
 
         initializeWebElements();
 
-        setLoginFieldText(login);
+        setLoginFieldText(Properties.getLogin());
 
-        setPasswordFieldText(password);
+        setPasswordFieldText(Properties.getPassword());
 
         getButtonLogin().click();
 
@@ -38,7 +35,7 @@ public class CheckMainMenuTest extends BaseScript{
 
         initMainMenuItems();
 
-        for (int i = 0; i < 13; i++){
+        for (int i = 0; i < getMainMenuItems().size(); i++){
             getMainMenuItems(i).click();
             try {
                 setThreadWait(1000);
@@ -63,6 +60,7 @@ public class CheckMainMenuTest extends BaseScript{
             initMainMenuItems();
         }
 
+        driver.close();
         driver.quit();
     }
 
@@ -74,8 +72,8 @@ public class CheckMainMenuTest extends BaseScript{
 
     private static void initMainMenuItems(){
         menuItems = new ArrayList<>();
-        //The "Каталог" and "Modules" sections are located by the "link-levelone" class
-        // while other by the "maintab" class
+        //While the "Каталог" or "Modules" pages opened all menu items are located by the "link-levelone" class
+        // otherwise by the "maintab" class
         menuItems.addAll(driver.findElements(By.className("link-levelone")));
         menuItems.addAll(driver.findElements(By.className("maintab")));
     }

@@ -11,17 +11,14 @@ public class LoginTest extends BaseScript {
     private  static  WebDriver driver = getDriver();
     public static void main(String[] args) {
 
-        String login = System.getenv("PRESTA_LOGIN");
-        String password = System.getenv("PRESTA_PASSWD");
-
         driver.manage().window().maximize();
         driver.navigate().to(Properties.getBaseAdminUrl());
 
         initializeWebElements();
 
-        setLoginFieldText(login);
+        setLoginFieldText(Properties.getLogin());
 
-        setPasswordFieldText(password);
+        setPasswordFieldText(Properties.getPassword());
 
         getButtonLogin().click();
 
@@ -36,6 +33,7 @@ public class LoginTest extends BaseScript {
 
         getHeaderLogout().click();
 
+        driver.close();
         driver.quit();
     }
 
